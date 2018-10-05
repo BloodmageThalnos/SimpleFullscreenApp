@@ -86,7 +86,22 @@ public class FullscreenActivity extends AppCompatActivity {
         htmlShow.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;// 返回false
+                return false;
+            }
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+                AlertDialog.Builder b = new AlertDialog.Builder(TestAlertActivity.this);
+                b.setTitle("Attention");
+                b.setMessage(message);
+                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        result.confirm();
+                    }
+                });
+                b.setCancelable(false);
+                b.create().show();
+                return true;
             }
         });
         htmlShow.loadUrl("http://ihello.world/");
