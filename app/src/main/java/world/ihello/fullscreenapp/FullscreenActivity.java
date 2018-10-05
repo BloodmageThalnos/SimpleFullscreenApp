@@ -14,13 +14,6 @@ import android.webkit.*;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    /*
-        These are some functions to make the app run in fullscreen mode.
-        Usage:
-            setOnTouchListener(mDelayHideTouchListener);
-            hide();
-        Begin.
-    */
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 1200;
     private static final int UI_ANIMATION_DELAY = 300;
@@ -72,6 +65,7 @@ public class FullscreenActivity extends AppCompatActivity {
     */
 
     private WebView htmlShow;
+    private WebSettings htmlSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +77,19 @@ public class FullscreenActivity extends AppCompatActivity {
         mContentView.setOnTouchListener(mDelayHideTouchListener);
 
         htmlShow = (WebView) findViewById(R.id.htmlShow);
+        htmlSettings = htmlShow.getSettings();
+        htmlSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        htmlSettings.setJavaScriptEnabled(true);
+        htmlSettings.setAllowFileAccess(true);
+        htmlSettings.setAllowContentAccess(true);
+        htmlSettings.setAllowUniversalAccessFromFileURLs(true);
         htmlShow.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;// 返回false
             }
         });
-        htmlShow.loadUrl("http://www.baidu.com/");
+        htmlShow.loadUrl("http://ihello.world/");
 
     }
     @Override
